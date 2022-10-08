@@ -1,0 +1,109 @@
+/*
+Melissa Gray
+9/16/2022
+
+Implementation of Table class
+*/
+
+#include "table.h"
+#include <typeinfo>
+#include <iostream>
+#include <stdlib.h>
+
+
+// Default Constructors: make table non-existent
+template <typename T>
+Table<T>::Table(){
+    numberOfRows = 0;
+    numberOfColumns = 0;
+    rows = NULL;
+    memoryAllocated = 0;
+    return;
+}
+
+// Constructor
+template <typename T>
+Table<T>::Table(int nrow, int ncol){
+    numberOfRows = nrow;
+    numberOfColumns = ncol;
+    memoryAllocated = 0;
+    // don't allocate just yet
+    rows = NULL;
+    return;
+}
+
+/*
+function: initialize
+--------------------
+Allocates memory for the rows and columns
+of the table. Tracks memory allocated
+
+Status:
+    0 = sucess
+    1 = couldn't allocate rows variable
+    2 = couldn't allocate row pointers
+
+Returns: a status number.
+
+Warning: allocates memory, but does not free.
+*/
+template <typename T>
+int Table<T>::initialize(){
+    /*
+    Type Translation:
+        P = pointer
+        i = int
+        b = bool
+        4Cell = Cell (class)
+        5Table = Table (class)
+    */
+
+    // Creating pointers for each row.
+    rows = (T **) malloc(sizeof(T *) * numberOfRows);
+    if (!rows)
+        return 1;
+    memoryAllocated += sizeof(T *) * numberOfRows;
+
+    // Allocating memory for each row
+    int i;
+    for (i = 0; i < numberOfColumns; i++){
+        *(rows + i) = (T *) malloc(sizeof(T) * numberOfColumns);
+        if (!(*(rows + i))){
+            // !FIXME
+            return 2;
+        }
+    }
+    return 0;
+}
+
+/*
+function: destroy
+-----------------
+Frees the memory allocated for the table's rows.
+
+Status:
+    0 = memoryAllocated == zero (meaning everything was freed properly)
+    1 = memoryAllocated > zero (meaning something wasn't freed)
+    2 = memoryAllocated < zero (meaning allocation calculation is off)
+
+Returns: a status number.
+
+Warnning: frees previously allocated memory.
+*/
+template <typename T>
+int Table<T>::destroy(){
+    free(rows);
+    memoryAllocated -= sizeof(T *) * numberOfRows;
+
+    // check memoryAllocated
+    if (memoryAllocated > 0)
+        return 1;
+    else if (memoryAllocated < 0)
+        return 2;
+    
+    return 0;
+}
+
+
+/* Instantiation of template functions */
+template class Table<bool>;
