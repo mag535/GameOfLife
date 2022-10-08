@@ -21,6 +21,7 @@ class Table{
         // counters
         int numberOfRows;
         int numberOfColumns;
+        int columnsAllocated;
 
         // holds the rows of the table
         T **rows;

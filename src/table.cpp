@@ -16,6 +16,7 @@ template <typename T>
 Table<T>::Table(){
     numberOfRows = 0;
     numberOfColumns = 0;
+    columnsAllocated = 0;
     rows = NULL;
     memoryAllocated = 0;
     return;
@@ -26,6 +27,7 @@ template <typename T>
 Table<T>::Table(int nrow, int ncol){
     numberOfRows = nrow;
     numberOfColumns = ncol;
+    columnsAllocated = 0;
     memoryAllocated = 0;
     // don't allocate just yet
     rows = NULL;
@@ -57,6 +59,7 @@ int Table<T>::initialize(){
         4Cell = Cell (class)
         5Table = Table (class)
     */
+    bool allocationError = false;
 
     // Creating pointers for each row.
     rows = (T **) malloc(sizeof(T *) * numberOfRows);
@@ -66,12 +69,24 @@ int Table<T>::initialize(){
 
     // Allocating memory for each row
     int i;
-    for (i = 0; i < numberOfColumns; i++){
+    for (i = 0; i < numberOfRows; i++){
         *(rows + i) = (T *) malloc(sizeof(T) * numberOfColumns);
         if (!(*(rows + i))){
-            // !FIXME
-            return 2;
+            allocationError = true;
+            break;
         }
+        memoryAllocated += sizeof(T) * numberOfColumns;
+        columnsAllocated++;
+    }
+
+    // check for allocation error
+    if (allocationError){
+        int j;
+        for (j = 0; j < i; j++){
+            free(*(rows + i));
+            memoryAllocated -= sizeof(T) * numberOfColumns;
+        }
+        return 2;
     }
     return 0;
 }
@@ -92,6 +107,17 @@ Warnning: frees previously allocated memory.
 */
 template <typename T>
 int Table<T>::destroy(){
+    int i;
+
+    // free rows
+    if (columnsAllocated == numberOfColumns){
+        for (i = 0; i < numberOfRows; i++){
+            free(*(rows + i));
+            memoryAllocated -= sizeof(T) * numberOfColumns;
+        }
+    }
+
+    // free row pointers
     free(rows);
     memoryAllocated -= sizeof(T *) * numberOfRows;
 

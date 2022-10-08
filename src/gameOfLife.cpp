@@ -14,7 +14,7 @@ The Game of Life
 
 // MAIN
 int main(int argc, char **argv){
-    int i = 1;
+    int i = 5;
     Table t = Table<bool>(i, i);
 
     bool b = true;
