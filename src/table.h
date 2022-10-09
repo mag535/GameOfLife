@@ -56,8 +56,9 @@ class Table{
         void setNumebrOfRows(int r) { numberOfRows = r; }
         void setNumberOfColumns(int c) { numberOfColumns = c; }
 
-        // indexers
-        T index(int x, int y);
+        // navigators
+        void insert(int x, int y, T val);
+        T *index(int x, int y);
 
         // prints
         void printRow();

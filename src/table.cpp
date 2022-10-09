@@ -130,6 +130,61 @@ int Table<T>::destroy(){
     return 0;
 }
 
+/*
+function: insert
+----------------
+Inserts a value into the given position.
+
+x: the row
+y: the column
+
+Returns: nothing.
+*/
+template <typename T>
+void Table<T>::insert(int x, int y, T val){
+    // bound checks
+    if ((x < 0) || (y < 0) || (x > numberOfRows) || (y > numberOfColumns)){
+        std::cout << "ERROR: Index out of range!" << std::endl;
+        return;
+    }
+
+    // find target row
+    T *targetRow = *(rows + x);
+
+    // insert value into target column
+    *(targetRow + y) = val;
+
+    return;
+}
+
+/*
+function: index
+---------------
+Finds and returns the value at the given position.
+(0, 0) Represents the element in the first row and column.
+
+x: the row
+y: the column.
+*/
+template <typename T>
+T *Table<T>::index(int x, int y){
+    // bound checks
+    if ((x < 0) || (y < 0) || (x > numberOfRows) || (y > numberOfColumns)){
+        std::cout << "ERROR: Index out of range!" << std::endl;
+        return NULL;
+    }
+
+    T *target;
+
+    // find target row
+    T *targetRow = *(rows + x);
+
+    // get address from target column
+    target = (targetRow + y);
+
+    return target;
+}
+
 
 /* Instantiation of template functions */
 template class Table<bool>;
