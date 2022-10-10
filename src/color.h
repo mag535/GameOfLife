@@ -15,6 +15,11 @@ class Color{
         int rgba[4]{};
 
     public:
+        // Default Constructor
+        Color();
+        // Constructor
+        Color(int newColor[]);
+
         // Predefined colors
         static const int red[4];
         static const int green[4];
