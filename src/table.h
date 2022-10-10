@@ -61,8 +61,8 @@ class Table{
         T *index(int x, int y);
 
         // prints
-        void printRow();
-        void printColumn();
+        void printRow(int x);
+        void printColumn(int y);
         void print();
 };
 

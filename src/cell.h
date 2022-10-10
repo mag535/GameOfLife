@@ -11,11 +11,18 @@ Header file for Cell object
 
 class Cell{
     private:
-        bool currentState;
+        // state trackers
         bool previousState;
+        bool currentState;
+
         // i,j position in grid
         int i;
         int j;
+        
+        // for graphics
+        float width;
+        float height;
+        // FIXME: color object
     
     public:
         // default constructor

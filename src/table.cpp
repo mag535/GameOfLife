@@ -135,15 +135,15 @@ function: insert
 ----------------
 Inserts a value into the given position.
 
-x: the row
-y: the column
+x: the row index.
+y: the column index.
 
 Returns: nothing.
 */
 template <typename T>
 void Table<T>::insert(int x, int y, T val){
     // bound checks
-    if ((x < 0) || (y < 0) || (x > numberOfRows) || (y > numberOfColumns)){
+    if ((x < 0) || (y < 0) || (x >= numberOfRows) || (y >= numberOfColumns)){
         std::cout << "ERROR: Index out of range!" << std::endl;
         return;
     }
@@ -163,13 +163,13 @@ function: index
 Finds and returns the value at the given position.
 (0, 0) Represents the element in the first row and column.
 
-x: the row
-y: the column.
+x: the row index.
+y: the column index.
 */
 template <typename T>
 T *Table<T>::index(int x, int y){
     // bound checks
-    if ((x < 0) || (y < 0) || (x > numberOfRows) || (y > numberOfColumns)){
+    if ((x < 0) || (y < 0) || (x >= numberOfRows) || (y >= numberOfColumns)){
         std::cout << "ERROR: Index out of range!" << std::endl;
         return NULL;
     }
@@ -185,6 +185,97 @@ T *Table<T>::index(int x, int y){
     return target;
 }
 
+/*
+function: printRow
+------------------
+Prints the values in the row at the given i position.
+
+x: the row index.
+
+Returns: nothing.
+*/
+template <typename T>
+void Table<T>::printRow(int x){
+    // bound check
+    if ((x < 0) || (x >= numberOfRows)){
+        std::cout << "ERROR: index out of range!" << std::endl;
+        return;
+    }
+
+    // find target row
+    T *targetRow = *(rows + x);
+
+    // print values in row
+    int j;
+    for (j = 0; j < numberOfColumns; j++){
+        std::cout << *(targetRow + j) << " ";
+    }
+    std::cout << std::endl;
+
+    return;
+}
+
+/*
+function: printColumn
+---------------------
+Prints the values in the column at the given j position.
+
+y: the column index.
+
+Returns: nothing.
+*/
+template <typename T>
+void Table<T>::printColumn(int y){
+    // bound check
+    if ((y < 0) || (y >= numberOfColumns)){
+        std::cout << "ERROR: index out of range!" << std::endl;
+        return;
+    }
+
+    // loop through rows to get values from each column
+    int i;
+    T *tempRow;
+    for (i = 0; i < numberOfRows; i++){
+        tempRow = *(rows + i);
+        std::cout << *(tempRow + y) << " ";
+    }
+    std::cout << std::endl;
+
+    return;
+}
+
+/*
+function: print
+---------------
+Prints the values in the Table.
+
+Returns: nothing.
+*/
+template <typename T>
+void Table<T>::print(){
+    int i, j;
+    T *tempRow;
+
+    // loop through rows, then columns and print
+    for (i = 0; i < numberOfRows; i++){
+        tempRow = *(rows + i);
+        for (j = 0; j < numberOfColumns; j++){
+            std::cout << *(tempRow + j) << " ";
+        }
+        std::cout << std::endl;
+    }
+
+    return;
+}
+
 
 /* Instantiation of template functions */
 template class Table<bool>;
+
+template class Table<int>;
+template class Table<float>;
+template class Table<double>;
+
+template class Table<char>;
+
+// FIXME: template class Table<Cell>;
