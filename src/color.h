@@ -18,7 +18,7 @@ class Color{
         // Default Constructor
         Color();
         // Constructor
-        Color(int newColor[]);
+        Color(int newColor[4]);
 
         // Predefined colors
         static const int red[4];
