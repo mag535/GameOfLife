@@ -5,9 +5,9 @@ Melissa Gray
 Header file for Cell object
 */
 
-
 #ifndef CELL_H
 #define CELL_H
+
 
 class Cell{
     private:
