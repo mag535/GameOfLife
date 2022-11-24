@@ -17,7 +17,9 @@ class Color{
     public:
         // Default Constructor
         Color();
-        // Constructor
+        // Integer Constructor
+        Color(int r, int g, int b, int a);
+        // Array Constructor
         Color(int newColor[4]);
 
         // Predefined colors
@@ -45,7 +47,9 @@ class Color{
 
         // Color manipulation of this Color instance
         void invert();
-        Color complement(Color other);
+
+        // Color manipulation of any single color instance
+        Color Color::complement(Color other);
 
         // Color manipulation of multiple Color instances
         static Color add(Color others[]);

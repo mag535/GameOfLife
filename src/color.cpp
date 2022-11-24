@@ -6,11 +6,12 @@ Header file for Color class
 */
 
 #include "color.h"
+#include <math.h>
 
 
 /* CONSTRUCTORS */
 
-// Default: set color to transparant black
+// Default: set color to transparent black
 Color::Color(){
     int i;
     for (i = 0; i < 4; i++){
@@ -20,6 +21,14 @@ Color::Color(){
 }
 
 // Constructor: set own color
+Color::Color(int r, int g, int b, int a){
+    rgba[0] = r;
+    rgba[1] = g;
+    rgba[2] = b;
+    rgba[3] = a;
+    return;
+}
+// Array Constructor
 Color::Color(int newColor[4]){
     int i;
     for (i = 0; i < 4; i++){
@@ -53,4 +62,43 @@ void Color::invert(){
     rgba[1] = 255 - rgba[1];
     rgba[2] = 255 - rgba[2];
     return;
+}
+
+/*
+function: complement
+-------------------------
+Calculates the color needed to cancel out the given color and create a grayscale
+color. This means the red, green, and blue parts are all equal.
+
+other: the color to cancel to grayscale.
+
+Returns: the color that cancels the given color to grayscale.
+*/
+Color Color::complement(Color other){
+    Color complementColor;
+    int part;
+    int rgb[3]{other.getRed(), other.getGreen(), other.getBlue()};
+
+    // check if other is already grayscale
+    if ((rgb[0] == rgb[1]) && (rgb[1] == rgb[2])){
+        return other;
+    }
+
+    // find max part
+    int maxPart;
+    if (rgb[0] > rgb[1]){
+        maxPart = rgb[0];
+    }else{
+        maxPart = rgb[1];
+    }
+
+    if (rgb[2] > maxPart){
+        maxPart = rgb[2];
+    }
+
+    // calculate complement
+    complementColor = Color(maxPart - rgb[0], maxPart - rgb[1], 
+                            maxPart - rgb[2], other.getAlpha());
+
+    return complementColor;
 }
