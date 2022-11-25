@@ -6,7 +6,8 @@ Header file for Color class
 */
 
 #include "color.h"
-#include <math.h>
+#include <iostream>
+
 
 
 /* CONSTRUCTORS */
@@ -101,4 +102,56 @@ Color Color::complement(Color other){
                             maxPart - rgb[2], other.getAlpha());
 
     return complementColor;
+}
+
+/*
+function: add
+-------------
+...
+*/
+Color Color::add(Color others[]){
+    Color temp;
+
+    std::cout << "WARNING -- Method not yet implemented";
+
+    return temp;
+}
+
+/*
+function: subtract
+-------------
+...
+*/
+Color Color::subtract(Color others[]){
+    Color temp;
+
+    std::cout << "WARNING -- Method not yet implemented";
+
+    return temp;
+}
+
+/*
+function: multiply
+-------------
+...
+*/
+Color Color::multiply(Color others[]){
+    Color temp;
+
+    std::cout << "WARNING -- Method not yet implemented";
+
+    return temp;
+}
+
+/*
+function: divide
+-------------
+...
+*/
+Color Color::divide(Color others[]){
+    Color temp;
+
+    std::cout << "WARNING -- Method not yet implemented";
+
+    return temp;
 }
